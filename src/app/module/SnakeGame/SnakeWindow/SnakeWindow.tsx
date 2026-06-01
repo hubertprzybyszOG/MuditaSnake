@@ -12,7 +12,7 @@ type SnakeWindowProps = {
   snake: Position[];
 };
 
-export function SnakeWindow({
+export default function SnakeWindow({
   boardSize,
   food,
   occupiedCells,
@@ -26,7 +26,7 @@ export function SnakeWindow({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Snake</Text>
-        <Text style={styles.score}>Punkty: {score}</Text>
+        <Text style={styles.score}>Score: {score}</Text>
       </View>
 
       <View style={styles.board}>
@@ -35,11 +35,9 @@ export function SnakeWindow({
             {Array.from({ length: boardSize }).map((__, columnIndex) => {
               const position = { x: columnIndex, y: rowIndex };
               const cellKey = `${position.x}:${position.y}`;
-              const isHead =
-                head.x === position.x && head.y === position.y;
+              const isHead = head.x === position.x && head.y === position.y;
               const isSnake = occupiedCells.has(cellKey);
-              const isFood =
-                food.x === position.x && food.y === position.y;
+              const isFood = food.x === position.x && food.y === position.y;
 
               return (
                 <View
@@ -63,10 +61,7 @@ export function SnakeWindow({
                     >
                       {isHead ? (
                         <View
-                          style={[
-                            styles.eyeRow,
-                            getEyeRowStyle(headDirection),
-                          ]}
+                          style={[styles.eyeRow, getEyeRowStyle(headDirection)]}
                         >
                           <View style={styles.eye} />
                           <View style={styles.eye} />
