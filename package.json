@@ -39,7 +39,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "build:android-debug": "npx expo prebuild --platform android && cd android && ./gradlew assembleDebug && cd .."
+    "build:android-debug": "expo prebuild --platform android && cd android && ./gradlew assembleDebug && cd ..",
+    "build:android-release": "expo prebuild --platform android && cd android && ./gradlew assembleRelease && cd .."
   },
   "private": true
 }

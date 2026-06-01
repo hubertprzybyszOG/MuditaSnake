@@ -1,13 +1,8 @@
 import { useFonts } from "expo-font";
 import { DefaultTheme, ThemeProvider } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
 
-import { AnimatedSplashOverlay } from "@/components/animated-icon";
 import { Colors } from "@/constants/theme";
 import HomeScreen from ".";
-
-SplashScreen.preventAutoHideAsync();
 
 const eInkNavigationTheme = {
   ...DefaultTheme,
@@ -36,19 +31,12 @@ export default function TabLayout() {
     "Lato-BlackItalic": require("@/assets/fonts/Lato-BlackItalic.ttf"),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [error, loaded]);
-
   if (!loaded && !error) {
     return null;
   }
 
   return (
     <ThemeProvider value={eInkNavigationTheme}>
-      <AnimatedSplashOverlay />
       <HomeScreen />
     </ThemeProvider>
   );
