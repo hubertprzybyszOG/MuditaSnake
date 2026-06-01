@@ -127,26 +127,11 @@ export default function SnakeGame() {
 
   if (phase === "gameOver") {
     return (
-      <View style={[styles.container, styles.centeredScreen]}>
-        <Text style={styles.title}>Game over</Text>
-        <Text style={styles.score}>Score: {score}</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="New game"
-          onPress={startGame}
-          style={styles.primaryButton}
-        >
-          <Text style={styles.primaryButtonText}>New game</Text>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Main menu"
-          onPress={openMenu}
-          style={styles.secondaryButton}
-        >
-          <Text style={styles.primaryButtonText}>Main menu</Text>
-        </Pressable>
-      </View>
+      <SnakeGameOverScreen
+        onMenuPress={openMenu}
+        onNewGamePress={startGame}
+        score={score}
+      />
     );
   }
 
@@ -160,6 +145,41 @@ export default function SnakeGame() {
         snake={snake}
       />
       <SnakeButtons onTurnPress={turnSnake} />
+    </View>
+  );
+}
+
+type SnakeGameOverScreenProps = {
+  onMenuPress: () => void;
+  onNewGamePress: () => void;
+  score: number;
+};
+
+function SnakeGameOverScreen({
+  onMenuPress,
+  onNewGamePress,
+  score,
+}: SnakeGameOverScreenProps) {
+  return (
+    <View style={[styles.container, styles.centeredScreen]}>
+      <Text style={styles.title}>Game over</Text>
+      <Text style={styles.score}>Score: {score}</Text>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="New game"
+        onPress={onNewGamePress}
+        style={styles.primaryButton}
+      >
+        <Text style={styles.primaryButtonText}>New game</Text>
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Main menu"
+        onPress={onMenuPress}
+        style={styles.secondaryButton}
+      >
+        <Text style={styles.primaryButtonText}>Main menu</Text>
+      </Pressable>
     </View>
   );
 }
