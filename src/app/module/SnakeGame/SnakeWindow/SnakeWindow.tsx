@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import { Fonts } from "@/constants/theme";
+
 import type { Position } from "../SnakeGame";
 
 type SnakeWindowProps = {
@@ -72,14 +74,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#000000",
+    fontFamily: Fonts.lato.bold,
     fontSize: 22,
-    fontWeight: "700",
     letterSpacing: 0.5,
   },
   score: {
     color: "#333333",
+    fontFamily: Fonts.lato.bold,
     fontSize: 14,
-    fontWeight: "700",
   },
   board: {
     width: "100%",

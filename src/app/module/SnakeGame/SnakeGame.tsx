@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { Fonts } from "@/constants/theme";
+
 import { SnakeButtons } from "./SnakeButtons/SnakeButtons";
 import { SnakeWindow } from "./SnakeWindow/SnakeWindow";
 
@@ -220,14 +222,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#000000",
+    fontFamily: Fonts.lato.bold,
     fontSize: 28,
-    fontWeight: "700",
     textTransform: "uppercase",
   },
   score: {
     color: "#333333",
+    fontFamily: Fonts.lato.bold,
     fontSize: 18,
-    fontWeight: "700",
   },
   primaryButton: {
     minWidth: 160,
@@ -249,8 +251,8 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: {
     color: "#000000",
+    fontFamily: Fonts.lato.bold,
     fontSize: 16,
-    fontWeight: "700",
     textTransform: "uppercase",
   },
 });

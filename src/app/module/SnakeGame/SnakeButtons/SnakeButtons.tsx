@@ -1,5 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { Fonts } from "@/constants/theme";
+
 import type { Turn } from "../SnakeGame";
 
 type SnakeButtonsProps = {
@@ -52,8 +54,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#000000",
+    fontFamily: Fonts.lato.bold,
     fontSize: 16,
-    fontWeight: "700",
     textTransform: "uppercase",
   },
 });

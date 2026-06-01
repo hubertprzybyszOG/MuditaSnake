@@ -17,30 +17,28 @@ export const Colors = {
 
 export type ThemeColor = keyof typeof Colors;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+export const Fonts = {
+  sans: 'Lato',
+  serif: Platform.select({ ios: 'ui-serif', default: 'serif', web: 'var(--font-serif)' }),
+  rounded: 'Lato',
+  mono: Platform.select({
+    ios: 'ui-monospace',
+    default: 'monospace',
+    web: 'var(--font-mono)',
+  }),
+  lato: {
+    regular: 'Lato',
+    italic: 'Lato-Italic',
+    thin: 'Lato-Thin',
+    thinItalic: 'Lato-ThinItalic',
+    light: 'Lato-Light',
+    lightItalic: 'Lato-LightItalic',
+    bold: 'Lato-Bold',
+    boldItalic: 'Lato-BoldItalic',
+    black: 'Lato-Black',
+    blackItalic: 'Lato-BlackItalic',
   },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+} as const;
 
 export const Spacing = {
   half: 2,
