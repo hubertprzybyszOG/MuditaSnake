@@ -3,8 +3,9 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { ButtonRadius, Fonts } from "@/constants/theme";
 
-import SnakeButtons from "./SnakeButtons";
-import SnakeWindow from "./SnakeWindow";
+import SnakeButtons from "../SnakeButtons";
+import SnakeMenu from "../SnakeMenu";
+import SnakeWindow from "../SnakeWindow";
 
 export type Direction = "up" | "right" | "down" | "left";
 export type Position = {
@@ -121,19 +122,7 @@ export default function SnakeGame() {
   );
 
   if (phase === "start") {
-    return (
-      <View style={[styles.container, styles.centeredScreen]}>
-        <Text style={styles.title}>Snake</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="New game"
-          onPress={startGame}
-          style={styles.primaryButton}
-        >
-          <Text style={styles.primaryButtonText}>New game</Text>
-        </Pressable>
-      </View>
-    );
+    return <SnakeMenu onStartPress={startGame} />;
   }
 
   if (phase === "gameOver") {

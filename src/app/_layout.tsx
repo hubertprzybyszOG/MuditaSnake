@@ -49,7 +49,6 @@ export default function TabLayout() {
   return (
     <ThemeProvider value={eInkNavigationTheme}>
       <AnimatedSplashOverlay />
-      {/* <AppTabs /> */}
       <HomeScreen />
     </ThemeProvider>
   );

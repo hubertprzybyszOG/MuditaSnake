@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { Fonts } from "@/constants/theme";
 
-import type { Direction, Position } from "../SnakeGame";
+import type { Direction, Position } from "../SnakeGame/SnakeGame";
 
 type SnakeWindowProps = {
   boardSize: number;

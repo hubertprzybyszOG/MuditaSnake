@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { ButtonRadius, Fonts } from "@/constants/theme";
 
-import type { Turn } from "../SnakeGame";
+import type { Turn } from "../SnakeGame/SnakeGame";
 
 type SnakeButtonsProps = {
   onTurnPress: (turn: Turn) => void;
