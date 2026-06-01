@@ -9,18 +9,18 @@ type SnakeButtonsProps = {
 };
 
 const BUTTONS: Array<{ turn: Turn; label: string }> = [
-  { turn: "left", label: "Lewo" },
-  { turn: "right", label: "Prawo" },
+  { turn: "left", label: "Left" },
+  { turn: "right", label: "Right" },
 ];
 
-export function SnakeButtons({ onTurnPress }: SnakeButtonsProps) {
+export default function SnakeButtons({ onTurnPress }: SnakeButtonsProps) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         {BUTTONS.map((button) => (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`Skrec weza: ${button.label.toLowerCase()}`}
+            accessibilityLabel={`Turn snake ${button.label.toLowerCase()}`}
             key={button.turn}
             onPress={() => onTurnPress(button.turn)}
             style={styles.button}

@@ -1,4 +1,4 @@
-package com.anonymous.muditasnake
+package com.ordergroup.muditasnake
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

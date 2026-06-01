@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MuditaSnake",
-    "slug": "MuditaSnake",
+    "name": "Mudita Snake",
+    "slug": "mudita-snake",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.MuditaSnake"
+      "package": "com.ordergroup.muditasnake"
     },
     "web": {
       "output": "static",

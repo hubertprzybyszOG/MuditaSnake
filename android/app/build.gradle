@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.muditasnake'
+    namespace 'com.ordergroup.muditasnake'
     defaultConfig {
-        applicationId 'com.anonymous.muditasnake'
+        applicationId 'com.ordergroup.muditasnake'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

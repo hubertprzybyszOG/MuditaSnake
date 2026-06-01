@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { MaxContentWidth, Spacing } from "@/constants/theme";
-import { SnakeGame } from "./module/SnakeGame";
+import SnakeGame from "./module/SnakeGame";
 
 function getDevMenuHint() {
   if (Platform.OS === "web") {

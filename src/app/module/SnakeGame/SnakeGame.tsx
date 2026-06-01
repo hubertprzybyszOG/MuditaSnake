@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { ButtonRadius, Fonts } from "@/constants/theme";
 
-import { SnakeButtons } from "./SnakeButtons/SnakeButtons";
-import { SnakeWindow } from "./SnakeWindow/SnakeWindow";
+import SnakeButtons from "./SnakeButtons";
+import SnakeWindow from "./SnakeWindow";
 
 export type Direction = "up" | "right" | "down" | "left";
 export type Position = {
@@ -37,7 +37,7 @@ const TURN_DIRECTION: Record<Direction, Record<Turn, Direction>> = {
   left: { left: "down", right: "up" },
 };
 
-export function SnakeGame() {
+export default function SnakeGame() {
   const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE);
   const [food, setFood] = useState<Position>(INITIAL_FOOD);
   const [direction, setDirection] = useState<Direction>("right");
@@ -126,11 +126,11 @@ export function SnakeGame() {
         <Text style={styles.title}>Snake</Text>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Nowa gra"
+          accessibilityLabel="New game"
           onPress={startGame}
           style={styles.primaryButton}
         >
-          <Text style={styles.primaryButtonText}>Nowa gra</Text>
+          <Text style={styles.primaryButtonText}>New game</Text>
         </Pressable>
       </View>
     );
@@ -139,23 +139,23 @@ export function SnakeGame() {
   if (phase === "gameOver") {
     return (
       <View style={[styles.container, styles.centeredScreen]}>
-        <Text style={styles.title}>Koniec gry</Text>
-        <Text style={styles.score}>Wynik: {score}</Text>
+        <Text style={styles.title}>Game over</Text>
+        <Text style={styles.score}>Score: {score}</Text>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Nowa gra"
+          accessibilityLabel="New game"
           onPress={startGame}
           style={styles.primaryButton}
         >
-          <Text style={styles.primaryButtonText}>Nowa gra</Text>
+          <Text style={styles.primaryButtonText}>New game</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Menu główne"
+          accessibilityLabel="Main menu"
           onPress={openMenu}
           style={styles.secondaryButton}
         >
-          <Text style={styles.primaryButtonText}>Menu główne</Text>
+          <Text style={styles.primaryButtonText}>Main menu</Text>
         </Pressable>
       </View>
     );

@@ -1,1 +1,3 @@
-export { SnakeGame } from "./SnakeGame";
+import SnakeGame from "./SnakeGame";
+
+export default SnakeGame;
