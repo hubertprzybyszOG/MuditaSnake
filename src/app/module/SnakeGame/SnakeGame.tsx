@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Fonts } from "@/constants/theme";
+import { ButtonRadius, Fonts } from "@/constants/theme";
 
 import { SnakeButtons } from "./SnakeButtons/SnakeButtons";
 import { SnakeWindow } from "./SnakeWindow/SnakeWindow";
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     minHeight: 48,
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: ButtonRadius,
     borderWidth: 2,
     borderColor: "#000000",
     backgroundColor: "#ffffff",
@@ -245,6 +246,7 @@ const styles = StyleSheet.create({
     minHeight: 48,
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: ButtonRadius,
     borderWidth: 2,
     borderColor: "#666666",
     backgroundColor: "#ffffff",

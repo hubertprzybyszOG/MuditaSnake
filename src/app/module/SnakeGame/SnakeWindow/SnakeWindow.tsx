@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { Fonts } from "@/constants/theme";
 
-import type { Position } from "../SnakeGame";
+import type { Direction, Position } from "../SnakeGame";
 
 type SnakeWindowProps = {
   boardSize: number;
@@ -20,6 +20,7 @@ export function SnakeWindow({
   snake,
 }: SnakeWindowProps) {
   const head = snake[0];
+  const headDirection = getHeadDirection(head, snake[1]);
 
   return (
     <View style={styles.container}>
@@ -45,11 +46,35 @@ export function SnakeWindow({
                   key={cellKey}
                   style={[
                     styles.cell,
-                    isSnake && styles.snakeCell,
-                    isHead && styles.headCell,
-                    isFood && styles.foodCell,
+                    (rowIndex + columnIndex) % 2 === 0 && styles.cellRaised,
                   ]}
-                />
+                >
+                  {isFood && !isSnake ? (
+                    <View style={styles.food}>
+                      <View style={styles.foodCore} />
+                    </View>
+                  ) : null}
+                  {isSnake ? (
+                    <View
+                      style={[
+                        styles.snakeSegment,
+                        isHead ? styles.headCell : styles.snakeCell,
+                      ]}
+                    >
+                      {isHead ? (
+                        <View
+                          style={[
+                            styles.eyeRow,
+                            getEyeRowStyle(headDirection),
+                          ]}
+                        >
+                          <View style={styles.eye} />
+                          <View style={styles.eye} />
+                        </View>
+                      ) : null}
+                    </View>
+                  ) : null}
+                </View>
               );
             })}
           </View>
@@ -59,57 +84,153 @@ export function SnakeWindow({
   );
 }
 
+function getHeadDirection(head: Position, neck?: Position): Direction {
+  if (!neck) {
+    return "right";
+  }
+
+  if (head.x > neck.x) {
+    return "right";
+  }
+
+  if (head.x < neck.x) {
+    return "left";
+  }
+
+  if (head.y > neck.y) {
+    return "down";
+  }
+
+  return "up";
+}
+
+function getEyeRowStyle(direction: Direction) {
+  switch (direction) {
+    case "up":
+      return styles.eyeRowUp;
+    case "right":
+      return styles.eyeRowRight;
+    case "down":
+      return styles.eyeRowDown;
+    case "left":
+      return styles.eyeRowLeft;
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    gap: 8,
+    gap: 12,
     backgroundColor: "#ffffff",
   },
   header: {
     width: "100%",
-    maxWidth: 260,
+    maxWidth: 304,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingHorizontal: 2,
   },
   title: {
     color: "#000000",
     fontFamily: Fonts.lato.bold,
-    fontSize: 22,
-    letterSpacing: 0.5,
+    fontSize: 24,
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   score: {
     color: "#333333",
     fontFamily: Fonts.lato.bold,
     fontSize: 14,
+    letterSpacing: 0.3,
+    textTransform: "uppercase",
   },
   board: {
     width: "100%",
-    maxWidth: 260,
+    maxWidth: 304,
     aspectRatio: 1,
-    borderWidth: 3,
+    gap: 3,
+    padding: 7,
+    borderWidth: 4,
     borderColor: "#000000",
-    backgroundColor: "#ffffff",
+    borderRadius: 24,
+    backgroundColor: "#d7d7d7",
   },
   row: {
     flex: 1,
     flexDirection: "row",
+    gap: 3,
   },
   cell: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#d9d9d9",
+    borderColor: "#c8c8c8",
+    backgroundColor: "#f8f8f8",
+  },
+  cellRaised: {
     backgroundColor: "#ffffff",
   },
+  snakeSegment: {
+    width: "82%",
+    height: "82%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 7,
+    backgroundColor: "#111111",
+  },
   snakeCell: {
-    backgroundColor: "#000000",
+    borderRadius: 6,
   },
   headCell: {
     backgroundColor: "#000000",
-    borderColor: "#ffffff",
-    borderWidth: 1,
+    borderRadius: 999,
+    borderWidth: 2,
+    borderColor: "#000000",
   },
-  foodCell: {
-    backgroundColor: "#666666",
+  eyeRow: {
+    position: "absolute",
+    flexDirection: "row",
+    gap: 3,
+  },
+  eyeRowUp: {
+    top: 3,
+  },
+  eyeRowRight: {
+    right: 3,
+    flexDirection: "column",
+  },
+  eyeRowDown: {
+    bottom: 3,
+  },
+  eyeRowLeft: {
+    left: 3,
+    flexDirection: "column",
+  },
+  eye: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#ffffff",
+  },
+  food: {
+    width: "72%",
+    height: "72%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "#000000",
+    borderRadius: 999,
+    backgroundColor: "#ffffff",
+  },
+  foodCore: {
+    width: "42%",
+    height: "42%",
+    borderRadius: 999,
+    backgroundColor: "#000000",
   },
 });

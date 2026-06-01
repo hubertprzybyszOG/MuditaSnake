@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Fonts } from "@/constants/theme";
+import { ButtonRadius, Fonts } from "@/constants/theme";
 
 import type { Turn } from "../SnakeGame";
 
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: ButtonRadius,
     borderWidth: 2,
     borderColor: "#000000",
     backgroundColor: "#ffffff",
