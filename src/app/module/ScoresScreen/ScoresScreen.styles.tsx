@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "space-between",
     gap: 12,
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
   },
   centeredScreen: {
     alignItems: "center",

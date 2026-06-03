@@ -2,6 +2,7 @@ import { useFonts } from "expo-font";
 import { DefaultTheme, Slot, ThemeProvider } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { SnakeBackgroundPattern } from "@/components/snake-background-pattern";
 import { Colors } from "@/constants/theme";
 
 const eInkNavigationTheme = {
@@ -38,7 +39,9 @@ export default function TabLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={eInkNavigationTheme}>
-        <Slot />
+        <SnakeBackgroundPattern>
+          <Slot />
+        </SnakeBackgroundPattern>
       </ThemeProvider>
     </SafeAreaProvider>
   );

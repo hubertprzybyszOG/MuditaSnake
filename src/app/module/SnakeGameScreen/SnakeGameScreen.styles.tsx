@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
     paddingHorizontal: 32,
   },
   container: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "stretch",
     justifyContent: "space-between",
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
     paddingBottom: 24,
   },
 });

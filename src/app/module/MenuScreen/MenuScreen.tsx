@@ -8,24 +8,26 @@ import styles from "./MenuScreen.styles";
 export default function MenuScreen() {
   return (
     <View style={[styles.container, styles.centeredScreen]}>
-      <SnakeLogo />
-      <Logo />
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="New game"
-        onPress={() => router.push("/game")}
-        style={styles.primaryButton}
-      >
-        <Text style={styles.primaryButtonText}>New game</Text>
-      </Pressable>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Best scores"
-        onPress={() => router.push("/scores")}
-        style={styles.primaryButton}
-      >
-        <Text style={styles.primaryButtonText}>Best scores</Text>
-      </Pressable>
+      <View style={styles.content}>
+        <SnakeLogo />
+        <Logo />
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="New game"
+          onPress={() => router.push("/game")}
+          style={styles.primaryButton}
+        >
+          <Text style={styles.primaryButtonText}>New game</Text>
+        </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Best scores"
+          onPress={() => router.push("/scores")}
+          style={styles.primaryButton}
+        >
+          <Text style={styles.primaryButtonText}>Best scores</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }

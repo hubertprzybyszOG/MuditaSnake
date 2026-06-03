@@ -7,11 +7,16 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "space-between",
     gap: 12,
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
   },
   centeredScreen: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  content: {
+    alignItems: "center",
+    gap: 12,
+    zIndex: 1,
   },
   snakeIcon: {
     flexDirection: "row",

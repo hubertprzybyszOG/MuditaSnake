@@ -23,6 +23,7 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: "transparent",
   },
   safeArea: {
     flex: 1,
