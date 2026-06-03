@@ -1,4 +1,4 @@
-import { Fonts } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -21,9 +21,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   score: {
-    color: "#000000",
-    fontFamily: Fonts.lato.regular,
-    fontSize: 16,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    letterSpacing: 2,
+    textAlign: "center",
+    textTransform: "uppercase",
   },
   board: {
     width: "100%",

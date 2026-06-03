@@ -10,6 +10,9 @@ import SnakeWindow from "./SnakeWindow";
 import type { Direction, Position, Turn } from "./game-types";
 
 const MOVE_INTERVAL_MS = 500;
+const BOARD_CELL_COUNT = BOARD_SIZE * BOARD_SIZE;
+
+type GameEndReason = "completed" | "lost";
 
 export default function SnakeGameScreen() {
   const [snake, setSnake] = useState<Position[]>(() => [...PREVIEW_SNAKE]);
@@ -17,7 +20,9 @@ export default function SnakeGameScreen() {
   const [food, setFood] = useState<Position>(() =>
     getRandomFood(snakeRef.current)
   );
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [gameEndReason, setGameEndReason] = useState<GameEndReason | null>(
+    null
+  );
   const directionRef = useRef<Direction>("right");
   const foodRef = useRef(food);
 
@@ -41,27 +46,27 @@ export default function SnakeGameScreen() {
   }, []);
 
   useEffect(() => {
-    if (isGameOver) {
+    if (gameEndReason) {
       router.replace({
         pathname: "/game-over",
-        params: { score: String(score) },
+        params: { result: gameEndReason, score: String(score) },
       });
     }
-  }, [isGameOver, score]);
+  }, [gameEndReason, score]);
 
   const handleTurnPress = useCallback(
     (turn: Turn) => {
-      if (isGameOver) {
+      if (gameEndReason) {
         return;
       }
 
       directionRef.current = getTurnedDirection(directionRef.current, turn);
     },
-    [isGameOver]
+    [gameEndReason]
   );
 
   useEffect(() => {
-    if (isGameOver) {
+    if (gameEndReason) {
       return;
     }
 
@@ -70,7 +75,7 @@ export default function SnakeGameScreen() {
       const nextHead = getNextHead(currentSnake[0], directionRef.current);
 
       if (isOutsideBoard(nextHead)) {
-        setIsGameOver(true);
+        setGameEndReason("lost");
 
         return;
       }
@@ -83,7 +88,7 @@ export default function SnakeGameScreen() {
       if (
         collisionSegments.some((segment) => isSamePosition(segment, nextHead))
       ) {
-        setIsGameOver(true);
+        setGameEndReason("lost");
 
         return;
       }
@@ -96,6 +101,12 @@ export default function SnakeGameScreen() {
       setSnake(nextSnake);
 
       if (hasEatenFood) {
+        if (nextSnake.length === BOARD_CELL_COUNT) {
+          setGameEndReason("completed");
+
+          return;
+        }
+
         const nextFood = getRandomFood(nextSnake);
         foodRef.current = nextFood;
         setFood(nextFood);
@@ -103,7 +114,7 @@ export default function SnakeGameScreen() {
     }, MOVE_INTERVAL_MS);
 
     return () => clearInterval(intervalId);
-  }, [isGameOver]);
+  }, [gameEndReason]);
 
   return (
     <SafeAreaView

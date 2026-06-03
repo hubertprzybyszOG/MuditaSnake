@@ -1,4 +1,4 @@
-import { ButtonRadius, Fonts } from "@/constants/theme";
+import { ButtonRadius, Colors, Fonts } from "@/constants/theme";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -20,9 +20,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   score: {
-    color: "#000000",
-    fontFamily: Fonts.lato.regular,
-    fontSize: 18,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    letterSpacing: 2,
+    textAlign: "center",
+    textTransform: "uppercase",
   },
   snakeIcon: {
     flexDirection: "row",
@@ -68,14 +71,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: ButtonRadius,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "#000000",
     backgroundColor: "#ffffff",
   },
   primaryButtonText: {
-    color: "#000000",
-    fontFamily: Fonts.lato.bold,
-    fontSize: 16,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    letterSpacing: 2,
+    textAlign: "center",
     textTransform: "uppercase",
   },
 });

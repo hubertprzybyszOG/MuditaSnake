@@ -1,4 +1,4 @@
-import { ButtonRadius, Fonts } from "@/constants/theme";
+import { ButtonRadius, Colors, Fonts } from "@/constants/theme";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: ButtonRadius,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "#000000",
     backgroundColor: "#ffffff",
   },
@@ -27,9 +27,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   buttonText: {
-    color: "#000000",
-    fontFamily: Fonts.lato.bold,
-    fontSize: 16,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    letterSpacing: 2,
+    textAlign: "center",
     textTransform: "uppercase",
   },
 });

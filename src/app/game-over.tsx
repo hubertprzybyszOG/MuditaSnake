@@ -1,4 +1,4 @@
-import GameOverScreen from "./module/GameOverScreen";
+import GameOverScreen from "./module/EndGameScreen";
 
 export default function GameOverPage() {
   return <GameOverScreen />;

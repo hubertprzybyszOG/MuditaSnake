@@ -18,6 +18,14 @@ export default function MenuScreen() {
       >
         <Text style={styles.primaryButtonText}>New game</Text>
       </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Best scores"
+        onPress={() => router.push("/scores")}
+        style={styles.primaryButton}
+      >
+        <Text style={styles.primaryButtonText}>Best scores</Text>
+      </Pressable>
     </View>
   );
 }

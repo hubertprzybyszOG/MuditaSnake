@@ -17,10 +17,10 @@ export function Logo({ style, ...rest }: TextProps) {
 const styles = StyleSheet.create({
   title: {
     color: Colors.text,
-    fontFamily: Fonts.mono,
-    fontSize: 36,
-    letterSpacing: 4,
-    lineHeight: 44,
+    fontFamily: Fonts.lato.black,
+    fontSize: 38,
+    letterSpacing: 1,
+    lineHeight: 46,
     textAlign: "center",
     textTransform: "uppercase",
   },
