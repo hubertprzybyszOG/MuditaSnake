@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import { Logo } from "@/components/logo";
+import { SnakeSegment } from "@/components/snake-logo";
 import { Fonts } from "@/constants/theme";
 
-import type { Direction, Position } from "../SnakeGame/SnakeGame";
+import type { Direction, Position } from "../game-types";
 
 type SnakeWindowProps = {
   boardSize: number;
@@ -25,7 +27,7 @@ export default function SnakeWindow({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Snake</Text>
+        <Logo />
         <Text style={styles.score}>Score: {score}</Text>
       </View>
 
@@ -38,13 +40,16 @@ export default function SnakeWindow({
               const isHead = head.x === position.x && head.y === position.y;
               const isSnake = occupiedCells.has(cellKey);
               const isFood = food.x === position.x && food.y === position.y;
+              const isLastColumn = columnIndex === boardSize - 1;
+              const isLastRow = rowIndex === boardSize - 1;
 
               return (
                 <View
                   key={cellKey}
                   style={[
                     styles.cell,
-                    (rowIndex + columnIndex) % 2 === 0 && styles.cellRaised,
+                    !isLastColumn && styles.cellBorderRight,
+                    !isLastRow && styles.cellBorderBottom,
                   ]}
                 >
                   {isFood && !isSnake ? (
@@ -53,21 +58,11 @@ export default function SnakeWindow({
                     </View>
                   ) : null}
                   {isSnake ? (
-                    <View
-                      style={[
-                        styles.snakeSegment,
-                        isHead ? styles.headCell : styles.snakeCell,
-                      ]}
-                    >
-                      {isHead ? (
-                        <View
-                          style={[styles.eyeRow, getEyeRowStyle(headDirection)]}
-                        >
-                          <View style={styles.eye} />
-                          <View style={styles.eye} />
-                        </View>
-                      ) : null}
-                    </View>
+                    <SnakeSegment
+                      direction={isHead ? headDirection : undefined}
+                      isHead={isHead}
+                      style={styles.snakeFill}
+                    />
                   ) : null}
                 </View>
               );
@@ -99,133 +94,72 @@ function getHeadDirection(head: Position, neck?: Position): Direction {
   return "up";
 }
 
-function getEyeRowStyle(direction: Direction) {
-  switch (direction) {
-    case "up":
-      return styles.eyeRowUp;
-    case "right":
-      return styles.eyeRowRight;
-    case "down":
-      return styles.eyeRowDown;
-    case "left":
-      return styles.eyeRowLeft;
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    gap: 12,
+    flex: 1,
+    gap: 20,
     backgroundColor: "#ffffff",
+    paddingTop: 8,
   },
   header: {
-    width: "100%",
-    maxWidth: 304,
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 2,
+    gap: 6,
+    width: "100%",
   },
   title: {
     color: "#000000",
     fontFamily: Fonts.lato.bold,
-    fontSize: 24,
-    letterSpacing: 0.8,
-    textTransform: "uppercase",
+    fontSize: 28,
+    letterSpacing: 0.2,
   },
   score: {
-    color: "#333333",
-    fontFamily: Fonts.lato.bold,
-    fontSize: 14,
-    letterSpacing: 0.3,
-    textTransform: "uppercase",
+    color: "#000000",
+    fontFamily: Fonts.lato.regular,
+    fontSize: 16,
   },
   board: {
     width: "100%",
-    maxWidth: 304,
+    maxWidth: 320,
     aspectRatio: 1,
-    gap: 3,
-    padding: 7,
-    borderWidth: 4,
+    borderWidth: 3,
     borderColor: "#000000",
-    borderRadius: 24,
-    backgroundColor: "#d7d7d7",
+    backgroundColor: "#ffffff",
   },
   row: {
     flex: 1,
     flexDirection: "row",
-    gap: 3,
   },
   cell: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 8,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#c8c8c8",
-    backgroundColor: "#f8f8f8",
-  },
-  cellRaised: {
     backgroundColor: "#ffffff",
+    overflow: "hidden",
   },
-  snakeSegment: {
-    width: "82%",
-    height: "82%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#000000",
-    borderRadius: 7,
-    backgroundColor: "#111111",
+  cellBorderRight: {
+    borderRightWidth: 1,
+    borderRightColor: "#000000",
   },
-  snakeCell: {
-    borderRadius: 6,
+  cellBorderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#000000",
   },
-  headCell: {
-    backgroundColor: "#000000",
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: "#000000",
-  },
-  eyeRow: {
-    position: "absolute",
-    flexDirection: "row",
-    gap: 3,
-  },
-  eyeRowUp: {
-    top: 3,
-  },
-  eyeRowRight: {
-    right: 3,
-    flexDirection: "column",
-  },
-  eyeRowDown: {
-    bottom: 3,
-  },
-  eyeRowLeft: {
-    left: 3,
-    flexDirection: "column",
-  },
-  eye: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: "#ffffff",
+  snakeFill: {
+    ...StyleSheet.absoluteFill,
   },
   food: {
-    width: "72%",
-    height: "72%",
+    width: "68%",
+    height: "68%",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
     borderColor: "#000000",
-    borderRadius: 999,
     backgroundColor: "#ffffff",
   },
   foodCore: {
     width: "42%",
     height: "42%",
-    borderRadius: 999,
     backgroundColor: "#000000",
   },
 });

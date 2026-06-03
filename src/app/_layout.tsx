@@ -1,8 +1,8 @@
 import { useFonts } from "expo-font";
-import { DefaultTheme, ThemeProvider } from "expo-router";
+import { DefaultTheme, Slot, ThemeProvider } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { Colors } from "@/constants/theme";
-import HomeScreen from ".";
 
 const eInkNavigationTheme = {
   ...DefaultTheme,
@@ -36,8 +36,10 @@ export default function TabLayout() {
   }
 
   return (
-    <ThemeProvider value={eInkNavigationTheme}>
-      <HomeScreen />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider value={eInkNavigationTheme}>
+        <Slot />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
