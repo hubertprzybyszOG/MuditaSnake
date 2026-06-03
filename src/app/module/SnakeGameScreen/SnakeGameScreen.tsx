@@ -1,51 +1,172 @@
-import { StyleSheet, View } from "react-native";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { router } from "expo-router";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import SnakeButtons from "../SnakeButtons";
-import SnakeWindow from "../SnakeWindow";
+import SnakeButtons from "./SnakeButtons";
+import { BOARD_SIZE, PREVIEW_SNAKE } from "./SnakeGameScreen.const";
+import styles from "./SnakeGameScreen.styles";
+import SnakeWindow from "./SnakeWindow";
+import type { Direction, Position, Turn } from "./game-types";
 
-const BOARD_SIZE = 12;
-
-const PREVIEW_SNAKE = [
-  { x: 5, y: 6 },
-  { x: 4, y: 6 },
-  { x: 3, y: 6 },
-] as const;
-
-const PREVIEW_FOOD = { x: 8, y: 6 };
-
-const PREVIEW_OCCUPIED_CELLS = new Set(
-  PREVIEW_SNAKE.map((segment) => `${segment.x}:${segment.y}`),
-);
+const MOVE_INTERVAL_MS = 350;
 
 export default function SnakeGameScreen() {
+  const [snake, setSnake] = useState<Position[]>(() => [...PREVIEW_SNAKE]);
+  const snakeRef = useRef<Position[]>([...PREVIEW_SNAKE]);
+  const [food, setFood] = useState<Position>(() =>
+    getRandomFood(snakeRef.current)
+  );
+  const [isGameOver, setIsGameOver] = useState(false);
+  const directionRef = useRef<Direction>("right");
+  const foodRef = useRef(food);
+
+  const occupiedCells = useMemo(
+    () => new Set(snake.map((segment) => getCellKey(segment))),
+    [snake]
+  );
+  const score = snake.length - PREVIEW_SNAKE.length;
+
+  useEffect(() => {
+    if (isGameOver) {
+      router.replace("/game-over");
+    }
+  }, [isGameOver]);
+
+  const handleTurnPress = useCallback(
+    (turn: Turn) => {
+      if (isGameOver) {
+        return;
+      }
+
+      directionRef.current = getTurnedDirection(directionRef.current, turn);
+    },
+    [isGameOver]
+  );
+
+  useEffect(() => {
+    if (isGameOver) {
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      const currentSnake = snakeRef.current;
+      const nextHead = getNextHead(currentSnake[0], directionRef.current);
+
+      if (isOutsideBoard(nextHead)) {
+        setIsGameOver(true);
+
+        return;
+      }
+
+      const hasEatenFood = isSamePosition(nextHead, foodRef.current);
+      const collisionSegments = hasEatenFood
+        ? currentSnake
+        : currentSnake.slice(0, -1);
+
+      if (
+        collisionSegments.some((segment) => isSamePosition(segment, nextHead))
+      ) {
+        setIsGameOver(true);
+
+        return;
+      }
+
+      const nextSnake = hasEatenFood
+        ? [nextHead, ...currentSnake]
+        : [nextHead, ...currentSnake.slice(0, -1)];
+
+      snakeRef.current = nextSnake;
+      setSnake(nextSnake);
+
+      if (hasEatenFood) {
+        const nextFood = getRandomFood(nextSnake);
+        foodRef.current = nextFood;
+        setFood(nextFood);
+      }
+    }, MOVE_INTERVAL_MS);
+
+    return () => clearInterval(intervalId);
+  }, [isGameOver]);
+
   return (
-    <SafeAreaView edges={["top", "right", "bottom", "left"]} style={styles.safeArea}>
+    <SafeAreaView
+      edges={["top", "right", "bottom", "left"]}
+      style={styles.safeArea}
+    >
       <View style={styles.container}>
         <SnakeWindow
           boardSize={BOARD_SIZE}
-          food={PREVIEW_FOOD}
-          occupiedCells={PREVIEW_OCCUPIED_CELLS}
-          score={0}
-          snake={[...PREVIEW_SNAKE]}
+          food={food}
+          occupiedCells={occupiedCells}
+          score={score}
+          snake={snake}
         />
-        <SnakeButtons onTurnPress={() => {}} />
+        <SnakeButtons onTurnPress={handleTurnPress} />
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    paddingHorizontal: 32,
-  },
-  container: {
-    flex: 1,
-    alignSelf: "stretch",
-    justifyContent: "space-between",
-    gap: 12,
-    backgroundColor: "#ffffff",
-  },
-});
+function getCellKey(position: Position) {
+  return `${position.x}:${position.y}`;
+}
+
+function getNextHead(head: Position, direction: Direction): Position {
+  switch (direction) {
+    case "up":
+      return { x: head.x, y: head.y - 1 };
+    case "right":
+      return { x: head.x + 1, y: head.y };
+    case "down":
+      return { x: head.x, y: head.y + 1 };
+    case "left":
+      return { x: head.x - 1, y: head.y };
+  }
+}
+
+function getTurnedDirection(direction: Direction, turn: Turn): Direction {
+  const directions: Direction[] = ["up", "right", "down", "left"];
+  const directionIndex = directions.indexOf(direction);
+  const turnOffset = turn === "right" ? 1 : -1;
+  const nextIndex =
+    (directionIndex + turnOffset + directions.length) % directions.length;
+
+  return directions[nextIndex];
+}
+
+function getRandomFood(snake: Position[]): Position {
+  const occupiedCells = new Set(snake.map((segment) => getCellKey(segment)));
+  const availableCells: Position[] = [];
+
+  for (let y = 0; y < BOARD_SIZE; y += 1) {
+    for (let x = 0; x < BOARD_SIZE; x += 1) {
+      const position = { x, y };
+
+      if (!occupiedCells.has(getCellKey(position))) {
+        availableCells.push(position);
+      }
+    }
+  }
+
+  if (availableCells.length === 0) {
+    return snake[0];
+  }
+
+  return availableCells[Math.floor(Math.random() * availableCells.length)];
+}
+
+function isOutsideBoard(position: Position) {
+  return (
+    position.x < 0 ||
+    position.x >= BOARD_SIZE ||
+    position.y < 0 ||
+    position.y >= BOARD_SIZE
+  );
+}
+
+function isSamePosition(firstPosition: Position, secondPosition: Position) {
+  return (
+    firstPosition.x === secondPosition.x && firstPosition.y === secondPosition.y
+  );
+}

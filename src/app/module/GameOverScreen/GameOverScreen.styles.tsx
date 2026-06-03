@@ -1,41 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-
 import { ButtonRadius, Fonts } from "@/constants/theme";
-
-type SnakeMenuProps = {
-  onStartPress: () => void;
-};
-
-export default function SnakeMenu({ onStartPress }: SnakeMenuProps) {
-  return (
-    <View style={[styles.container, styles.centeredScreen]}>
-      <Text style={styles.title}>Snake</Text>
-      <View
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-        style={styles.snakeIcon}
-      >
-        <View style={[styles.snakeSegment, styles.snakeHead]}>
-          <View style={styles.eyeRow}>
-            <View style={styles.eye} />
-            <View style={styles.eye} />
-          </View>
-        </View>
-        <View style={[styles.snakeSegment, styles.snakeBody]} />
-        <View style={[styles.snakeSegment, styles.snakeBody]} />
-        <View style={[styles.snakeSegment, styles.snakeTail]} />
-      </View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="New game"
-        onPress={onStartPress}
-        style={styles.primaryButton}
-      >
-        <Text style={styles.primaryButtonText}>New game</Text>
-      </Pressable>
-    </View>
-  );
-}
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +12,12 @@ const styles = StyleSheet.create({
   centeredScreen: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    color: "#000000",
+    fontFamily: Fonts.lato.bold,
+    fontSize: 28,
+    textTransform: "uppercase",
   },
   snakeIcon: {
     flexDirection: "row",
@@ -87,12 +57,6 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: "#ffffff",
   },
-  title: {
-    color: "#000000",
-    fontFamily: Fonts.lato.bold,
-    fontSize: 28,
-    textTransform: "uppercase",
-  },
   primaryButton: {
     minWidth: 160,
     minHeight: 48,
@@ -110,3 +74,5 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 });
+
+export default styles;
