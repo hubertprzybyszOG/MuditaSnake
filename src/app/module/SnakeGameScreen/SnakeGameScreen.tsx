@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { router } from "expo-router";
-import { View } from "react-native";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BackHandler, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import SnakeButtons from "./SnakeButtons";
@@ -9,7 +9,7 @@ import styles from "./SnakeGameScreen.styles";
 import SnakeWindow from "./SnakeWindow";
 import type { Direction, Position, Turn } from "./game-types";
 
-const MOVE_INTERVAL_MS = 350;
+const MOVE_INTERVAL_MS = 500;
 
 export default function SnakeGameScreen() {
   const [snake, setSnake] = useState<Position[]>(() => [...PREVIEW_SNAKE]);
@@ -28,10 +28,26 @@ export default function SnakeGameScreen() {
   const score = snake.length - PREVIEW_SNAKE.length;
 
   useEffect(() => {
+    const backSubscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/menu");
+
+        return true;
+      }
+    );
+
+    return () => backSubscription.remove();
+  }, []);
+
+  useEffect(() => {
     if (isGameOver) {
-      router.replace("/game-over");
+      router.replace({
+        pathname: "/game-over",
+        params: { score: String(score) },
+      });
     }
-  }, [isGameOver]);
+  }, [isGameOver, score]);
 
   const handleTurnPress = useCallback(
     (turn: Turn) => {

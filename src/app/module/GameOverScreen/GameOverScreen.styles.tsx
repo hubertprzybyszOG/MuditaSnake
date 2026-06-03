@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textTransform: "uppercase",
   },
+  score: {
+    color: "#000000",
+    fontFamily: Fonts.lato.regular,
+    fontSize: 18,
+  },
   snakeIcon: {
     flexDirection: "row",
     alignItems: "center",

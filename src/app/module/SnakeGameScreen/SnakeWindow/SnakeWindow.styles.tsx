@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#000000",
   },
   snakeFill: {
-    ...StyleSheet.absoluteFill,
+    height: "84%",
+    width: "84%",
   },
   food: {
     width: "68%",
