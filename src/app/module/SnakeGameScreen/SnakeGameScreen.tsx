@@ -10,6 +10,7 @@ import SnakeWindow from "./SnakeWindow";
 import type { Direction, Position, Turn } from "./game-types";
 
 const MOVE_INTERVAL_MS = 500;
+const MOVE_INTERVAL_INCREMENT_MS = 5;
 const BOARD_CELL_COUNT = BOARD_SIZE * BOARD_SIZE;
 
 type GameEndReason = "completed" | "lost";
@@ -31,6 +32,7 @@ export default function SnakeGameScreen() {
     [snake]
   );
   const score = snake.length - PREVIEW_SNAKE.length;
+  const moveIntervalMs = MOVE_INTERVAL_MS + score * MOVE_INTERVAL_INCREMENT_MS;
 
   useEffect(() => {
     const backSubscription = BackHandler.addEventListener(
@@ -111,10 +113,10 @@ export default function SnakeGameScreen() {
         foodRef.current = nextFood;
         setFood(nextFood);
       }
-    }, MOVE_INTERVAL_MS);
+    }, moveIntervalMs);
 
     return () => clearInterval(intervalId);
-  }, [gameEndReason]);
+  }, [gameEndReason, moveIntervalMs]);
 
   return (
     <SafeAreaView
