@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     alignSelf: "stretch",
-    justifyContent: "space-between",
+    gap: 24,
+    justifyContent: "flex-start",
     backgroundColor: "transparent",
-    paddingBottom: 24,
   },
 });
 
