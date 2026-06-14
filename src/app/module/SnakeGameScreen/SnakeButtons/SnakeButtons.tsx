@@ -1,7 +1,8 @@
 import { Pressable, Text, View } from "react-native";
 
 import styles from "./SnakeButtons.styles";
-import { BUTTONS, SnakeButtonsProps } from "./SnakeButtons.types";
+import type { SnakeButtonsProps } from "./SnakeButtons.types";
+import BUTTONS from "./SnakeButtons.types";
 
 export default function SnakeButtons({ onTurnPress }: SnakeButtonsProps) {
   return (

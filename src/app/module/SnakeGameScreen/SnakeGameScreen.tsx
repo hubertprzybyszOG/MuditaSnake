@@ -4,20 +4,22 @@ import { BackHandler, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import SnakeButtons from "./SnakeButtons";
-import { BOARD_SIZE, PREVIEW_SNAKE } from "./SnakeGameScreen.const";
+import constants from "./SnakeGameScreen.const";
 import styles from "./SnakeGameScreen.styles";
 import SnakeWindow from "./SnakeWindow";
 import type { Direction, Position, Turn } from "./game-types";
 
 const MOVE_INTERVAL_MS = 500;
 const MOVE_INTERVAL_INCREMENT_MS = 5;
-const BOARD_CELL_COUNT = BOARD_SIZE * BOARD_SIZE;
+const BOARD_CELL_COUNT = constants.BOARD_SIZE * constants.BOARD_SIZE;
 
 type GameEndReason = "completed" | "lost";
 
 export default function SnakeGameScreen() {
-  const [snake, setSnake] = useState<Position[]>(() => [...PREVIEW_SNAKE]);
-  const snakeRef = useRef<Position[]>([...PREVIEW_SNAKE]);
+  const [snake, setSnake] = useState<Position[]>(() => [
+    ...constants.PREVIEW_SNAKE,
+  ]);
+  const snakeRef = useRef<Position[]>([...constants.PREVIEW_SNAKE]);
   const [food, setFood] = useState<Position>(() =>
     getRandomFood(snakeRef.current)
   );
@@ -31,7 +33,7 @@ export default function SnakeGameScreen() {
     () => new Set(snake.map((segment) => getCellKey(segment))),
     [snake]
   );
-  const score = snake.length - PREVIEW_SNAKE.length;
+  const score = snake.length - constants.PREVIEW_SNAKE.length;
   const moveIntervalMs = MOVE_INTERVAL_MS + score * MOVE_INTERVAL_INCREMENT_MS;
 
   useEffect(() => {
@@ -125,7 +127,7 @@ export default function SnakeGameScreen() {
     >
       <View style={styles.container}>
         <SnakeWindow
-          boardSize={BOARD_SIZE}
+          boardSize={constants.BOARD_SIZE}
           food={food}
           occupiedCells={occupiedCells}
           score={score}
@@ -168,8 +170,8 @@ function getRandomFood(snake: Position[]): Position {
   const occupiedCells = new Set(snake.map((segment) => getCellKey(segment)));
   const availableCells: Position[] = [];
 
-  for (let y = 0; y < BOARD_SIZE; y += 1) {
-    for (let x = 0; x < BOARD_SIZE; x += 1) {
+  for (let y = 0; y < constants.BOARD_SIZE; y += 1) {
+    for (let x = 0; x < constants.BOARD_SIZE; x += 1) {
       const position = { x, y };
 
       if (!occupiedCells.has(getCellKey(position))) {
@@ -188,9 +190,9 @@ function getRandomFood(snake: Position[]): Position {
 function isOutsideBoard(position: Position) {
   return (
     position.x < 0 ||
-    position.x >= BOARD_SIZE ||
+    position.x >= constants.BOARD_SIZE ||
     position.y < 0 ||
-    position.y >= BOARD_SIZE
+    position.y >= constants.BOARD_SIZE
   );
 }
 

@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.ordergroup.muditasnake"
+      "package": "com.przybysz.muditasnake"
     },
     "web": {
       "output": "static",

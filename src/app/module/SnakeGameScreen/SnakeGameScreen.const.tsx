@@ -12,4 +12,11 @@ const PREVIEW_OCCUPIED_CELLS = new Set(
   PREVIEW_SNAKE.map((segment) => `${segment.x}:${segment.y}`)
 );
 
-export { BOARD_SIZE, PREVIEW_FOOD, PREVIEW_OCCUPIED_CELLS, PREVIEW_SNAKE };
+const constants = {
+  BOARD_SIZE,
+  PREVIEW_FOOD,
+  PREVIEW_OCCUPIED_CELLS,
+  PREVIEW_SNAKE,
+};
+
+export default constants;

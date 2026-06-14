@@ -1,4 +1,4 @@
-package com.ordergroup.muditasnake
+package com.przybysz.muditasnake
 import com.facebook.react.common.assets.ReactFontManager
 
 import android.app.Application
